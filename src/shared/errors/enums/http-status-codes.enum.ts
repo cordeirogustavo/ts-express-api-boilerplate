@@ -337,7 +337,7 @@ export const HttpStatusCodes = {
   /**
    * Custom Status Code
    *
-   * On [this slack discussion](https://mziq.slack.com/archives/C029FNMNRNU/p1699623557176269) we decided to use the
+   * On [this slack discussion]we decided to use the
    * unsigned status to set our business logic error code
    */
   VALIDATION_FAILED: 450,
@@ -350,14 +350,14 @@ export const HttpStatusCodes = {
   /**
    * Custom Status Code
    *
-   * On [this slack discussion](https://mziq.slack.com/archives/C029FNMNRNU/p1699623557176269) we decided to use the
+   * On [this slack discussion] we decided to use the
    * unsigned status to set our business logic error code
    */
   DATABASE_ERROR: 460,
   /**
    * Custom Status Code
    *
-   * On [this slack discussion](https://mziq.slack.com/archives/C029FNMNRNU/p1699623557176269) we decided to use the
+   * On [this slack discussion] we decided to use the
    * unsigned status to set our business logic error code
    */
   CLIENT_ERROR: 470,
@@ -416,5 +416,5 @@ export const HttpStatusCodes = {
    *
    * The 511 status code indicates that the client needs to authenticate to gain network access.
    */
-  NETWORK_AUTHENTICATION_REQUIRED: 511
-}
+  NETWORK_AUTHENTICATION_REQUIRED: 511,
+};

@@ -18,9 +18,9 @@ export function expressErrorHandler(
   }
 
   const authErrorMessage = Object.values({});
-  const isMZAuthError =
+  const isAuthError =
     err instanceof Error && authErrorMessage.includes(err.message);
-  if (isMZAuthError) {
+  if (isAuthError) {
     const unauthorizedError = new UnauthorizedDataHandler();
     return unauthorizedError.handle(err, request, response);
   }
