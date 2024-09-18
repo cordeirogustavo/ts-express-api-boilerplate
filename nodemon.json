@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "ts, gql",
+  "ignore": ["dist", "node_modules"],
+  "exec": "ts-node --files ./src/server.ts"
+}
