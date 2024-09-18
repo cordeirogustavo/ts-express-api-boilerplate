@@ -81,6 +81,30 @@ src/
 ### Installation
 
 1. Clone this repository:
+
    ```bash
    git clone https://github.com/cordeirogustavo/ts-express-api-boilerplate.git
+   ```
+
+2. Install dependency
+
+   ```bash
+   npm i
+   ```
+
+3. Run locally
+
+   ```bash
+   npm run dev
+   ```
+
+4. Run tests
+
+   ```bash
+   npm run test
+   ```
+
+5. Build
+   ```bash
+   npm run build
    ```
