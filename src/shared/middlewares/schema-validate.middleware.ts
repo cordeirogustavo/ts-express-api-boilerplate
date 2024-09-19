@@ -8,16 +8,9 @@ export function schemaValidateMiddleware(schema: any) {
     _response: Response,
     next: NextFunction
   ) => {
-    try {
-      const schemaValidateProvider = container.resolve(SchemaValidateProvider);
-
-      await schemaValidateProvider.valid(schema, request);
-
-      return next();
-    } catch (err) {
-      return next(err);
-    }
+    const schemaValidateProvider = container.resolve(SchemaValidateProvider);
+    await schemaValidateProvider.valid(schema, request);
+    return next();
   };
-
   return valid;
 }

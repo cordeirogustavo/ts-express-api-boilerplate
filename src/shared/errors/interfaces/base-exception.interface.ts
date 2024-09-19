@@ -1,9 +1,9 @@
-import { IRequest, IResponse } from 'shared/interfaces'
-import { IErrorBody, IErrorLogInfo } from './custom-error-response.interface'
+import { IRequest, IResponse } from "@/shared/interfaces";
+import { IErrorBody, IErrorLogInfo } from "./custom-error-response.interface";
 
 export interface IBaseExceptionHandler {
-  get body(): IErrorBody
-  get log(): IErrorLogInfo
+  get body(): IErrorBody;
+  get log(): IErrorLogInfo;
 
-  handle(err: unknown, request: IRequest<any>, response: IResponse): IResponse
+  handle(err: unknown, request: IRequest<any>, response: IResponse): IResponse;
 }

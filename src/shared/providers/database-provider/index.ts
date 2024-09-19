@@ -1,10 +1,10 @@
-import { PGDatabaseProvider, PGPromise } from "./implementations";
+import { PGDatabaseConnectionProvider, PGPromise } from "./implementations";
 
 export * from "./interfaces";
 
 const providers = {
   pgPromise: PGPromise,
-  pg: PGDatabaseProvider,
+  pg: PGDatabaseConnectionProvider,
 };
 
 export const DatabaseConnectionProvider =

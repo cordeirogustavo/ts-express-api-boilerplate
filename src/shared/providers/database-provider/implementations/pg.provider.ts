@@ -4,6 +4,7 @@ import { singleton } from "tsyringe";
 import { Pool, PoolClient, PoolConfig, QueryResult, QueryResultRow } from "pg";
 
 import { DatabaseErrorHandler, NoDataHandler } from "@/shared/errors/handlers";
+
 import {
   ICommandRequestDTO,
   ICommandResponseDTO,
@@ -16,7 +17,7 @@ import {
   IOneRequestDTO,
   IRegisterQueryRequestDTO,
 } from "../dtos";
-import { IDatabaseProvider } from "../interfaces";
+import { IDatabaseConnectionProvider } from "../interfaces";
 
 type ParamValue =
   | undefined
@@ -29,7 +30,9 @@ type ParamValue =
   | Date;
 
 @singleton()
-export class PGDatabaseProvider implements IDatabaseProvider {
+export class PGDatabaseConnectionProvider
+  implements IDatabaseConnectionProvider
+{
   private readonly pool: Pool;
 
   private configConnection: PoolConfig = {
@@ -116,16 +119,20 @@ export class PGDatabaseProvider implements IDatabaseProvider {
     return param.toString();
   }
 
-  private paramsMap(key: symbol, params: { [key: string]: ParamValue } | void) {
-    if (!params) return this.getQuery({ key });
-
+  private paramsMap(
+    key?: symbol,
+    params?: { [key: string]: ParamValue },
+    sql?: string
+  ) {
+    const sqlQuery = sql || this.getQuery({ key: key as symbol });
+    if (!params) return sqlQuery;
     return Object.entries(params).reduce((acc, current) => {
       const [paramKey, paramValue] = current;
       const regexp = new RegExp(`\\$\\(${paramKey}\\)`, "g");
 
       const parsedQuery = acc.replace(regexp, this.getParamValue(paramValue));
       return parsedQuery;
-    }, this.getQuery({ key }));
+    }, sqlQuery);
   }
 
   private getQuery(params: IGetQueryRequestDTO): string {
@@ -170,11 +177,11 @@ export class PGDatabaseProvider implements IDatabaseProvider {
   }
 
   public async manyOrError<T>(
-    { key, params }: IManyOrErrorRequestDTO,
+    { key, params, sql }: IManyOrErrorRequestDTO,
     transaction?: PoolClient
   ): Promise<T[]> {
     const client = await this.getClient(transaction);
-    const query = this.paramsMap(key, params);
+    const query = this.paramsMap(key, params, sql);
 
     const { rows } = await this.query(client, query);
 
@@ -182,11 +189,11 @@ export class PGDatabaseProvider implements IDatabaseProvider {
   }
 
   public async manyOrBlank<T>(
-    { key, params }: IManyOrBlankRequestDTO,
+    { key, params, sql }: IManyOrBlankRequestDTO,
     transaction?: PoolClient
   ): Promise<T[] | []> {
     const client = await this.getClient(transaction);
-    const query = this.paramsMap(key, params);
+    const query = this.paramsMap(key, params, sql);
 
     const { rows } = await this.query(client, query);
 
@@ -196,11 +203,11 @@ export class PGDatabaseProvider implements IDatabaseProvider {
   }
 
   public async manyOrNone<T>(
-    { key, params }: IManyOrNoneRequestDTO,
+    { key, params, sql }: IManyOrNoneRequestDTO,
     transaction?: PoolClient
   ): Promise<T[] | null> {
     const client = await this.getClient(transaction);
-    const query = this.paramsMap(key, params);
+    const query = this.paramsMap(key, params, sql);
 
     const { rows } = await this.query(client, query);
 
@@ -210,11 +217,11 @@ export class PGDatabaseProvider implements IDatabaseProvider {
   }
 
   public async one<T>(
-    { key, params }: IOneRequestDTO,
+    { key, params, sql }: IOneRequestDTO,
     transaction?: PoolClient
   ): Promise<T> {
     const client = await this.getClient(transaction);
-    const query = this.paramsMap(key, params);
+    const query = this.paramsMap(key, params, sql);
 
     const { rows } = await this.query(client, query);
 
@@ -224,11 +231,11 @@ export class PGDatabaseProvider implements IDatabaseProvider {
   }
 
   public async oneOrNone<T>(
-    { key, params }: IOneOrNoneRequestDTO,
+    { key, params, sql }: IOneOrNoneRequestDTO,
     transaction?: PoolClient
   ): Promise<T | null> {
     const client = await this.getClient(transaction);
-    const query = this.paramsMap(key, params);
+    const query = this.paramsMap(key, params, sql);
 
     const { rows } = await this.query(client, query);
 
@@ -238,12 +245,12 @@ export class PGDatabaseProvider implements IDatabaseProvider {
   }
 
   public async oneOrDefault<T>(
-    { key, params }: IOneOrNoneRequestDTO,
+    { key, params, sql }: IOneOrNoneRequestDTO,
     defaultValue: T,
     transaction?: PoolClient
   ): Promise<T> {
     const client = await this.getClient(transaction);
-    const query = this.paramsMap(key, params);
+    const query = this.paramsMap(key, params, sql);
 
     const { rows } = await this.query(client, query);
 
@@ -253,26 +260,26 @@ export class PGDatabaseProvider implements IDatabaseProvider {
   }
 
   public async none(
-    { key, params }: INoneRequestDTO,
+    { key, params, sql }: INoneRequestDTO,
     transaction?: PoolClient
   ): Promise<void> {
     const client = await this.getClient(transaction);
-    const query = this.paramsMap(key, params);
+    const query = this.paramsMap(key, params, sql);
 
     await this.query(client, query);
   }
 
   public async command<T>(
-    { key, params }: ICommandRequestDTO,
+    { key, params, sql }: ICommandRequestDTO,
     transaction?: PoolClient
   ): Promise<ICommandResponseDTO<T>> {
     const client = await this.getClient(transaction);
-    const query = this.paramsMap(key, params);
+    const query = this.paramsMap(key, params, sql);
 
     const result = await this.query(client, query);
     const rows = result.rows as T;
-    const rowCount = result.rowCount || 0;
+    const { rowCount } = result;
 
-    return { rows, rowCount };
+    return { rows, rowCount: rowCount || 0 };
   }
 }

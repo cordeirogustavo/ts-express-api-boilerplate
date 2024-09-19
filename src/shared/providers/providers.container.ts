@@ -3,7 +3,7 @@ import { DependencyContainer } from "tsyringe";
 import { IContainer } from "@/shared/interfaces";
 
 import { DatabaseConnectionProvider } from "./database-provider";
-import { IDatabaseProvider } from "./database-provider/interfaces";
+import { IDatabaseConnectionProvider } from "./database-provider/interfaces";
 import { ProvidersSymbols } from "./providers.symbols";
 
 import { SchemaValidateProvider } from "./schema-validate-provider";
@@ -15,7 +15,7 @@ export class ProvidersContainer implements Partial<IContainer> {
       ProvidersSymbols.SchemaValidadeProvider,
       SchemaValidateProvider
     );
-    container.register<IDatabaseProvider>(
+    container.register<IDatabaseConnectionProvider>(
       ProvidersSymbols.DatabaseConnectionProvider,
       {
         useValue: new DatabaseConnectionProvider(),

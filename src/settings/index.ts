@@ -1,3 +1,4 @@
+import "dotenv/config";
 const {
   APP_NAME,
   APP_PORT,

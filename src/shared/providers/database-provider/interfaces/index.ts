@@ -1,1 +1,1 @@
-export * from './database.provider.interface'
+export * from "./database-connection.provider.interface";

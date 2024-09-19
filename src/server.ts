@@ -1,11 +1,12 @@
 import "reflect-metadata";
 import "@/settings";
 import "@/shared/app/app.container";
+import "express-async-errors";
 
 import express from "express";
 import { container } from "tsyringe";
 import { AppRouter } from "./shared/app/app.router";
-import { expressErrorHandler } from "./shared/middlewares";
+import { expressErrorHandler } from "@/shared/middlewares";
 
 const app = express();
 const port = 3000;

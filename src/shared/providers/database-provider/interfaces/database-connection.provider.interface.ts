@@ -6,10 +6,10 @@ import {
   INoneRequestDTO,
   IOneOrNoneRequestDTO,
   IOneRequestDTO,
-  IRegisterQueryRequestDTO,
+  IRegisterQueryRequestDTO
 } from '../dtos'
 
-export interface IDatabaseProvider {
+export interface IDatabaseConnectionProvider {
   registerQuery(params: IRegisterQueryRequestDTO): void
 
   startTransaction(): Promise<any>

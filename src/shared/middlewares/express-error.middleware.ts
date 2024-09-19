@@ -26,7 +26,6 @@ export function expressErrorHandler(
   }
 
   if (err instanceof ZodError) {
-    console.log(err.issues);
     const [firstError] = err.issues;
     const errorMessage = `${firstError.message} on ${firstError.path.join(
       ", "

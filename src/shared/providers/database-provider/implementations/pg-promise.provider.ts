@@ -5,7 +5,7 @@ import pgPromise, { IDatabase, QueryFile } from "pg-promise";
 import { IClient } from "pg-promise/typescript/pg-subset";
 
 import { NoDataHandler } from "@/shared/errors/handlers";
-import { IDatabaseProvider } from "../interfaces";
+import { IDatabaseConnectionProvider } from "../interfaces";
 import {
   ICommandRequestDTO,
   ICommandResponseDTO,
@@ -35,7 +35,7 @@ type ParamValue =
 const { QueryResultError, queryResultErrorCode } = pgPromise.errors;
 
 @singleton()
-export class PGPromise implements IDatabaseProvider {
+export class PGPromise implements IDatabaseConnectionProvider {
   private configConnection = {
     host: process.settings.database.host,
     port: process.settings.database.port,

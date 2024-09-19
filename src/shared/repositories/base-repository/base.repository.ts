@@ -20,7 +20,7 @@ export class BaseRepository implements IBaseRepository {
 
       this.databaseConnectionProvider.registerQuery({
         key,
-        currentFolderPath: path.join(this.queries.dirname, ".."),
+        currentFolderPath: this.queries.dirname,
         fileName,
       });
     });
