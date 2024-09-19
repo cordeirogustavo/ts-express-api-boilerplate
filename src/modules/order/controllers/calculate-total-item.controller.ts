@@ -2,7 +2,7 @@ import { inject, singleton } from "tsyringe";
 import { OrderService } from "../order.service";
 import { OrderSymbols } from "../order.symbols";
 import { IController, IRequest, IResponse } from "@/shared/interfaces";
-import { CalculateTotalItemSchema } from "./order.schema-validate";
+import { CalculateTotalItemSchema } from "../order.schema-validate";
 import { z } from "zod";
 
 export type TCalculateTotalItemRequestDTO = z.infer<

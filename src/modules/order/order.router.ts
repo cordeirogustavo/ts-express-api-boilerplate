@@ -3,7 +3,7 @@ import { inject, singleton } from "tsyringe";
 import { OrderSymbols } from "./order.symbols";
 import { IRouter } from "@/shared/interfaces";
 import { schemaValidateMiddleware } from "@/shared/middlewares";
-import { CalculateTotalItemSchema } from "./controllers";
+import { CalculateTotalItemSchema } from "./order.schema-validate";
 import { ICalculateTotalItemController } from "./controllers";
 
 const PREFIX = "/order";

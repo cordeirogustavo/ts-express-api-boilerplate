@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "@/settings";
 import "@/shared/app/app.container";
 
 import express from "express";
