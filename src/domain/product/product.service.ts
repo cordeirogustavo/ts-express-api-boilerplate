@@ -21,14 +21,14 @@ export class ProductService implements IProductService {
     return products.map((product) => mapProductToDTO(product));
   }
 
-  async getById(productId: string): Promise<TProductDTO> {
+  async getById(productId: string): Promise<TProductDTO | null> {
     const product = await this.productRepository.getById(productId);
-    return mapProductToDTO(product);
+    return product ? mapProductToDTO(product) : null;
   }
 
-  async getByEANCode(eanCode: string): Promise<TProductDTO> {
+  async getByEANCode(eanCode: string): Promise<TProductDTO | null> {
     const product = await this.productRepository.getByEANCode(eanCode);
-    return mapProductToDTO(product);
+    return product ? mapProductToDTO(product) : null;
   }
 
   async create(product: TCreateProductInput): Promise<TProductDTO> {

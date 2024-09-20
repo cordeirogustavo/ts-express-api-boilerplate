@@ -18,19 +18,27 @@ The project follows a modular structure, where each module contains its own cont
 ```bash
 src/
 ├── @types/                     # Global types
+│   └── environment.d.ts        # Environment type
 │   └── express.d.ts            # Express extension type
-├── modules/                    # Modules from application
+│   └── modules.d.ts            # Process extension environment
+├── domain/                     # Domains from application
 │   └── order/                  # Order module
-│       ├── controllers/        # Module controller
-│       │   ├── calculate-total-item.controller.ts
-│       │   └── index.ts
 │       ├── tests/              # Module tests (unit, integration)
 │       │   └── index.ts
-│       ├── order.container.ts  # Dependency injection settings from module
-│       ├── order.router.ts     # Module routes
-│       ├── order.schema-validate.ts # Zod Schema validate
-│       ├── order.service.ts    # Service (use-case)
-│       └── order.symbols.ts    # Symbols for dependency injection
+│       ├── index.ts
+│       ├── order.container.ts             # Dependency injection settings from module
+│       ├── order.controller.interface.ts  # Controller interface
+│       ├── order.controller.ts            # Controller
+│       ├── order.entity.ts                # Entity
+│       ├── order.mapper.ts                # Mapper to return data
+│       ├── order.repository.interface.ts  # Repository interface
+│       ├── order.repository.ts            # Repository
+│       ├── order.router.ts                # Router
+│       ├── order.schema-validate.ts       # Zod Schema validate
+│       ├── order.service.interface.ts     # Service (use-case) interface
+│       ├── order.service.ts               # Service (use-case)
+│       └── order.symbols.ts               # Symbols for dependency injection
+│       └── order.types.ts                 # Domain types
 ├── shared/                     # Shared code
 │   ├── app/                    # Container dependency injection
 │   │   ├── app.container.ts
@@ -58,8 +66,7 @@ src/
 │   │   └── schema-validate.middleware.ts
 │   └── providers/              # Providers
 │       └── schema-validate-provider/ # Schema validation provider
-│           ├── zod-schema-validate.provider.ts
-│           └── schema-validate.provider.interface.ts
+│       └── database-provider/        # Schema validation provider
 ├── server.ts                   # Server start
 ├── .env-example                # .env example
 ├── .gitignore                  # Ignored files to git repository

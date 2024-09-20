@@ -12,3 +12,11 @@ export const UpdateProductSchema = z.object({
   params: z.object({ productId: z.string().uuid() }),
   ...CreateProductSchema.shape,
 });
+
+export const ProductIdSchema = z.object({
+  params: z.object({ productId: z.string().uuid() }),
+});
+
+export const ProductEANSchema = z.object({
+  params: z.object({ eanCode: z.string().min(12) }),
+});

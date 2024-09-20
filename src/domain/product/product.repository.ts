@@ -24,15 +24,39 @@ export class ProductRepository
   }
 
   async list(): Promise<TProduct[]> {
-    return Promise.resolve([]);
+    return (await this.databaseConnectionProvider.manyOrBlank<ProductEntity[]>({
+      sql: `
+        SELECT 
+          * 
+        FROM public.product
+        `,
+    })) as TProduct[];
   }
-  getById(productId: string): Promise<TProduct> {
-    return Promise.resolve({} as TProduct);
+
+  async getById(productId: string): Promise<TProduct | null> {
+    return (await this.databaseConnectionProvider.oneOrNone<ProductEntity>({
+      sql: `
+        SELECT 
+          * 
+        FROM public.product
+        WHERE "productId" = $(productId) AND
+                          "deletedAt" IS NULL`,
+      params: { productId },
+    })) as TProduct;
   }
 
   async getByEANCode(eanCode: string): Promise<TProduct> {
-    return Promise.resolve({} as TProduct);
+    return (await this.databaseConnectionProvider.oneOrNone<ProductEntity>({
+      sql: `
+        SELECT 
+          * 
+        FROM public.product
+        WHERE "eanCode" = $(eanCode) AND
+                          "deletedAt" IS NULL`,
+      params: { eanCode },
+    })) as TProduct;
   }
+
   async create(product: TCreateProductInput): Promise<TProduct> {
     const newProduct = new ProductEntity(product);
     return (await this.databaseConnectionProvider.oneOrNone<ProductEntity>({
@@ -77,6 +101,21 @@ export class ProductRepository
   }
 
   async delete(productId: string): Promise<boolean> {
-    return Promise.resolve(true);
+    const result =
+      await this.databaseConnectionProvider.oneOrNone<ProductEntity>({
+        sql: `
+        UPDATE public.product
+        SET
+          "updatedAt" = NOW(),
+          "deletedAt" = NOW()
+        WHERE
+          "productId" = $(productId) AND
+          "deletedAt" IS NULL
+        RETURNING "productId"
+        
+       `,
+        params: { productId },
+      });
+    return !!result;
   }
 }

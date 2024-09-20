@@ -6,7 +6,7 @@ import {
 
 export interface IProductRepository {
   list(): Promise<TProduct[]>;
-  getById(productId: string): Promise<TProduct>;
+  getById(productId: string): Promise<TProduct | null>;
   getByEANCode(eanCode: string): Promise<TProduct>;
   create(product: TCreateProductInput): Promise<TProduct>;
   update(productId: string, product: TUpdateProductInput): Promise<TProduct>;

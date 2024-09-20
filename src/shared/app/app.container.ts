@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 
-import { OrderContainer } from "@/modules/order";
-import { ProductContainer } from "@/modules/product";
+import { OrderContainer } from "@/domain/order";
+import { ProductContainer } from "@/domain/product";
 
 import { ProvidersContainer } from "../providers/providers.container";
 

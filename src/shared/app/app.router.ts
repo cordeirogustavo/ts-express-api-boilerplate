@@ -3,8 +3,8 @@ import { inject, injectable } from "tsyringe";
 
 import { IRouter } from "@/shared/interfaces";
 
-import { OrderSymbols } from "@/modules/order";
-import { ProductSymbols } from "@/modules/product";
+import { OrderSymbols } from "@/domain/order";
+import { ProductSymbols } from "@/domain/product";
 
 @injectable()
 export class AppRouter implements IRouter {

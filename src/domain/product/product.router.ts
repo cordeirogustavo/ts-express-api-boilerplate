@@ -5,6 +5,8 @@ import { IRouter } from "@/shared/interfaces";
 import { schemaValidateMiddleware } from "@/shared/middlewares";
 import {
   CreateProductSchema,
+  ProductEANSchema,
+  ProductIdSchema,
   UpdateProductSchema,
 } from "./product.schema-validate";
 import { IProductController } from "./product.controller.interface";
@@ -19,6 +21,29 @@ export class ProductRouter implements IRouter {
   ) {}
 
   public register(server: Express): void {
+    server.get(
+      `${PREFIX}`,
+      this.productController.getAllProducts.bind(
+        this.productController.getAllProducts
+      )
+    );
+
+    server.get(
+      `${PREFIX}/:productId`,
+      schemaValidateMiddleware(ProductIdSchema),
+      this.productController.getProductById.bind(
+        this.productController.getProductById
+      )
+    );
+
+    server.get(
+      `${PREFIX}/ean/:eanCode`,
+      schemaValidateMiddleware(ProductEANSchema),
+      this.productController.getProductByEANCode.bind(
+        this.productController.getProductByEANCode
+      )
+    );
+
     server.post(
       `${PREFIX}`,
       schemaValidateMiddleware(CreateProductSchema),
@@ -32,6 +57,14 @@ export class ProductRouter implements IRouter {
       schemaValidateMiddleware(UpdateProductSchema),
       this.productController.updateProduct.bind(
         this.productController.updateProduct
+      )
+    );
+
+    server.delete(
+      `${PREFIX}/:productId`,
+      schemaValidateMiddleware(ProductIdSchema),
+      this.productController.deleteProduct.bind(
+        this.productController.deleteProduct
       )
     );
   }
