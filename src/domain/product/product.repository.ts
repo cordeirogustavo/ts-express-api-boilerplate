@@ -29,6 +29,7 @@ export class ProductRepository
         SELECT 
           * 
         FROM public.product
+        WHERE "deletedAt" IS NULL
         `,
     })) as TProduct[];
   }
@@ -93,10 +94,11 @@ export class ProductRepository
           price       = $(price),
           "updatedAt" = $(updatedAt)
         WHERE
-          "productId" = $(productId)
+          "productId" = $(productId) AND
+          "deletedAt" IS NULL
         RETURNING *
        `,
-      params: { ...updatedProduct, productId },
+      params: updatedProduct,
     })) as TProduct;
   }
 
@@ -112,7 +114,6 @@ export class ProductRepository
           "productId" = $(productId) AND
           "deletedAt" IS NULL
         RETURNING "productId"
-        
        `,
         params: { productId },
       });
