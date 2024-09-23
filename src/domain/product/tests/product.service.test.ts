@@ -88,4 +88,23 @@ describe("Product service", () => {
     expect(productRepository.getById).toHaveBeenCalledTimes(1);
     expect(product).toEqual(null);
   });
+
+  it("should return a product if getByEANCode called with a valid id", async () => {
+    const { productRepository, productService, mockedProduct } =
+      generateProductMock();
+    const product = await productService.getById("some-uuid");
+    expect(productRepository.getById).toHaveBeenCalledWith("some-uuid");
+    expect(productRepository.getById).toHaveBeenCalledTimes(1);
+    expect(product).toEqual(mapProductToDTO(mockedProduct));
+  });
+
+  it("should return null if getById called with wrong id", async () => {
+    const { productRepository, productService, mockedProduct } =
+      generateProductMock();
+    vi.spyOn(productRepository, "getById").mockResolvedValueOnce(null);
+    const product = await productService.getById("wrong-id");
+    expect(productRepository.getById).toHaveBeenCalledWith("wrong-id");
+    expect(productRepository.getById).toHaveBeenCalledTimes(1);
+    expect(product).toEqual(null);
+  });
 });
