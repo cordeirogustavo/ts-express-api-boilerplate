@@ -18,5 +18,5 @@ export const ProductIdSchema = z.object({
 });
 
 export const ProductEANSchema = z.object({
-  params: z.object({ eanCode: z.string().min(12) }),
+  params: z.object({ eanCode: z.string().min(12).max(12) }),
 });

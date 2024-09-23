@@ -11,6 +11,9 @@ export type TProduct = {
   description: string;
   eanCode?: string;
   price: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 };
 
 export type TCreateProductRequestDTO = z.infer<typeof CreateProductSchema>;

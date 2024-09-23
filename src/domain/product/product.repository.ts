@@ -3,7 +3,11 @@ import { IProductRepository } from "./product.repository.interface";
 import { IDatabaseConnectionProvider } from "@/shared/providers/database-provider";
 import { ProvidersSymbols } from "@/shared/providers";
 import { BaseRepository } from "@/shared/repositories/base-repository";
-import { TCreateProductInput, TProduct } from "./product.types";
+import {
+  TCreateProductInput,
+  TProduct,
+  TUpdateProductInput,
+} from "./product.types";
 import { ProductEntity } from "./product.entity";
 
 @singleton()
@@ -83,7 +87,10 @@ export class ProductRepository
     })) as TProduct;
   }
 
-  async update(productId: string, product: TProduct): Promise<TProduct> {
+  async update(
+    productId: string,
+    product: TUpdateProductInput
+  ): Promise<TProduct> {
     const updatedProduct = new ProductEntity({ ...product, productId });
     return (await this.databaseConnectionProvider.oneOrNone<ProductEntity>({
       sql: `

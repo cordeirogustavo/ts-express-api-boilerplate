@@ -5,6 +5,6 @@ export const mapProductToDTO = (product: TProduct): TProductDTO => {
     productId: product.productId,
     description: product.description,
     eanCode: product.eanCode,
-    price: product.price,
+    price: Number(product.price),
   };
 };
