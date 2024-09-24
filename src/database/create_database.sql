@@ -26,4 +26,24 @@ CREATE TABLE IF NOT EXISTS public.product
     CONSTRAINT "PK_productId" PRIMARY KEY ("productId")
 );
 
+CREATE TABLE IF NOT EXISTS public."user"
+(
+    "userId" uuid NOT NULL DEFAULT uuid_generate_v4(),
+    name character varying(150) NOT NULL,
+    email character varying(150),
+    password character varying(200),
+    status "UserStatus",
+    provider character varying(50) DEFAULT 'TsAPI',
+    "providerIdentifier" character varying(100),
+    "mfaEnabled" integer DEFAULT 0,
+    "mfaKey" json,
+    "mfaMethod" "MfaType",
+    "mfaEabledAt" timestamp without time zone,
+    "userPicture" character varying(1024),
+    "createdAt" timestamp without time zone NOT NULL DEFAULT NOW(),
+    "updatedAt" timestamp without time zone,
+    "deletedAt" timestamp without time zone,
+    CONSTRAINT "PK_user_userId" PRIMARY KEY ("userId")
+);
+
 END;

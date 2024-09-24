@@ -20,7 +20,6 @@ export class UnhandledError extends BaseExceptionHandler {
     // Unhandled exceptions are logged as errors
     // We have to log on logger first, so we have error details before formating to caller
     // process.logger.fatal(this.addTraceIdToLog(err, request.headers.traceId));
-    console.log(err);
     // slack.notify(err, req)
 
     return super.handle(err, request, response);

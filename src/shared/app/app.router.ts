@@ -5,6 +5,7 @@ import { IRouter } from "@/shared/interfaces";
 
 import { OrderSymbols } from "@/domain/order";
 import { ProductSymbols } from "@/domain/product";
+import { UserSymbols } from "@/domain/user";
 
 @injectable()
 export class AppRouter implements IRouter {
@@ -12,11 +13,14 @@ export class AppRouter implements IRouter {
     @inject(OrderSymbols.OrderRouter)
     private orderRouter: IRouter,
     @inject(ProductSymbols.ProductRouter)
-    private productRouter: IRouter
+    private productRouter: IRouter,
+    @inject(UserSymbols.UserRouter)
+    private userRouter: IRouter
   ) {}
 
   public register(server: Express) {
     this.orderRouter.register(server);
     this.productRouter.register(server);
+    this.userRouter.register(server);
   }
 }

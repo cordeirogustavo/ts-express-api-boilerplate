@@ -4,6 +4,7 @@ import {
   TGoogleUser,
 } from "./google-auth.provider.interface";
 import { getTranslate, TLanguages } from "@/shared/utils/translates";
+import { CastErrorHandler } from "@/shared/errors/handlers";
 @singleton()
 export class GoogleAuthProvider implements IGoogleAuthProvider {
   async authenticate(
@@ -12,9 +13,9 @@ export class GoogleAuthProvider implements IGoogleAuthProvider {
   ): Promise<TGoogleUser | null> {
     const requestQueryParams = {
       code: idToken,
-      client_id: process.settings.google.oauth.clientId,
-      client_secret: process.settings.google.oauth.clientSecret,
-      redirect_uri: process.settings.app.url,
+      client_id: process.settings.google.oauth.clientId || "",
+      client_secret: process.settings.google.oauth.clientSecret || "",
+      redirect_uri: process.settings.app.url || "",
       grant_type: "authorization_code",
     };
 
@@ -27,13 +28,13 @@ export class GoogleAuthProvider implements IGoogleAuthProvider {
     });
 
     if (!tokenResponse.ok) {
-      throw new Error(getTranslate("failedGoogleLogin", language));
+      throw new CastErrorHandler(getTranslate("failedGoogleLogin", language));
     }
 
     const tokenData = await tokenResponse.json();
 
     if (!tokenData.access_token) {
-      throw new Error(getTranslate("failedGoogleLogin", language));
+      throw new CastErrorHandler(getTranslate("failedGoogleLogin", language));
     }
     const userInfoResponse = await fetch(
       `https://www.googleapis.com/oauth2/v2/userinfo`,
@@ -46,7 +47,7 @@ export class GoogleAuthProvider implements IGoogleAuthProvider {
     );
 
     if (!userInfoResponse.ok) {
-      throw new Error(getTranslate("failedGoogleLogin", language));
+      throw new CastErrorHandler(getTranslate("failedGoogleLogin", language));
     }
 
     const userInfo = await userInfoResponse.json();

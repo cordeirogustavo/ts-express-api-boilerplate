@@ -4,6 +4,7 @@ import {
   TFacebookUser,
 } from "./facebook-auth.provider.interface";
 import { getTranslate, TLanguages } from "@/shared/utils/translates";
+import { CastErrorHandler } from "@/shared/errors/handlers";
 
 @singleton()
 export class FacebookAuthProvider implements IFacebookAuthProvider {
@@ -21,13 +22,13 @@ export class FacebookAuthProvider implements IFacebookAuthProvider {
 
     if (!userInfoResponse.ok) {
       const errorText = await userInfoResponse.text();
-      throw new Error(getTranslate("failedFacebookLogin", language));
+      throw new CastErrorHandler(getTranslate("failedFacebookLogin", language));
     }
 
     const userInfo = await userInfoResponse.json();
 
     if (!userInfo.id) {
-      throw new Error(getTranslate("failedFacebookLogin", language));
+      throw new CastErrorHandler(getTranslate("failedFacebookLogin", language));
     }
 
     return {

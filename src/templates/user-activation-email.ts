@@ -235,7 +235,7 @@ export const UserActivationEmailTemplate = `
                       sans-serif;
                   "
                 >
-                  CryptoPeek © <%= allRightsReserved %>
+                  TsAPI © <%= allRightsReserved %>
                 </p>
               </td>
             </tr>

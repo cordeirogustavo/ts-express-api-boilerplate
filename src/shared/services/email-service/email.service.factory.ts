@@ -3,7 +3,7 @@ import { NodeMailerService } from "../node-mailer-service";
 
 export class EmailServiceFactory {
   public static createEmailService(): IEmailService {
-    switch (process.settings.providers.email) {
+    switch (process.settings?.providers.email || "nodemailer") {
       case "nodemailer":
         return new NodeMailerService();
       default:

@@ -241,7 +241,7 @@ export const UserForgotPasswordEmailTemplate = `
                       sans-serif;
                   "
                 >
-                  CryptoPeek © <%= allRightsReserved %>
+                  TsAPI © <%= allRightsReserved %>
                 </p>
               </td>
             </tr>

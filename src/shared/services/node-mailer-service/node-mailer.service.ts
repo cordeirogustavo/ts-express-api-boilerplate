@@ -7,16 +7,18 @@ export class NodeMailerService implements IEmailService {
   private senderEmail: string;
 
   constructor() {
-    this.senderEmail = process.settings.email.sender.email;
-    this.senderName = process.settings.email.sender.name;
+    this.senderEmail =
+      process?.settings?.email.sender.email || "no-reply@localhost";
+    this.senderName =
+      process?.settings?.email.sender.name || "no-reply@localhost";
 
     this.transporter = nodemailer.createTransport({
-      host: process.settings.email.host,
-      port: Number(process.settings.email.port),
-      secure: Number(process.settings.email.port) === 465,
+      host: process?.settings?.email.host || "localhost",
+      port: Number(process?.settings?.email.port || 587),
+      secure: Number(process?.settings?.email.port) === 465,
       auth: {
-        user: process.settings.email.auth.user,
-        pass: process.settings.email.auth.pass,
+        user: process?.settings?.email.auth.user || "no-reply@localhost",
+        pass: process?.settings?.email.auth.pass || "no-reply@localhost",
       },
     });
   }
@@ -36,7 +38,6 @@ export class NodeMailerService implements IEmailService {
       await this.transporter.sendMail(mailOptions);
     } catch (error) {
       console.error("Error sending email:", error);
-      throw error;
     }
   }
 }
