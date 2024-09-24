@@ -3,6 +3,8 @@ const {
   APP_NAME,
   APP_PORT,
   APP_SLUG,
+  APP_URL,
+  APP_SECRET,
   APP_ENV,
   APP_LOG_LEVEL,
   AWS_S3_REGION,
@@ -41,9 +43,20 @@ const {
   DATABASE_PROVIDER,
   MAX_BODY_SIZE,
   SERVER_TIMEOUT,
-  MZ_CORE_API_URL,
   TEMP_FOLDER,
   UPLOADS_FOLDER,
+  FACEBOOK_CLIENT_ID,
+  FACEBOOK_CLIENT_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  EMAIL_PROVIDER,
+  EMAIL_HOST,
+  EMAIL_PORT,
+  EMAIL_SECURE,
+  EMAIL_AUTH_USER,
+  EMAIL_AUTH_PASS,
+  EMAIL_SENDER_NAME,
+  EMAIL_SENDER_EMAIL,
 } = process.env;
 
 process.settings = {
@@ -51,15 +64,14 @@ process.settings = {
     name: APP_NAME,
     port: +(APP_PORT || 5000),
     slug: APP_SLUG,
+    url: APP_URL,
+    secret: APP_SECRET,
     env: APP_ENV,
     logLevel: APP_LOG_LEVEL,
     maxBodySize: MAX_BODY_SIZE,
     serverTimeout: +SERVER_TIMEOUT,
   },
   api: {},
-  mziq: {
-    url: MZ_CORE_API_URL,
-  },
   aws: {
     keyId: AWS_ACCESS_KEY_ID,
     secretKey: AWS_SECRET_KEY,
@@ -91,6 +103,7 @@ process.settings = {
     queue: QUEUE_PROVIDER || "rabbitmq",
     cache: CACHE_PROVIDER || "redis",
     database: DATABASE_PROVIDER || "pgPromise",
+    email: EMAIL_PROVIDER || "nodemailer",
   },
   cache: {
     host: CACHE_HOST,
@@ -113,5 +126,30 @@ process.settings = {
   storage: {
     tmpFolder: TEMP_FOLDER,
     uploadsFolder: UPLOADS_FOLDER,
+  },
+  email: {
+    host: EMAIL_HOST,
+    port: Number(EMAIL_PORT) || 587,
+    secure: Boolean(EMAIL_SECURE),
+    auth: {
+      user: EMAIL_AUTH_USER,
+      pass: EMAIL_AUTH_PASS,
+    },
+    sender: {
+      name: EMAIL_SENDER_NAME,
+      email: EMAIL_SENDER_EMAIL,
+    },
+  },
+  google: {
+    oauth: {
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+    },
+  },
+  facebook: {
+    oauth: {
+      clientId: FACEBOOK_CLIENT_ID,
+      clientSecret: FACEBOOK_CLIENT_SECRET,
+    },
   },
 };

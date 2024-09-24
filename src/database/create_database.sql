@@ -1,5 +1,17 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+CREATE TYPE public."UserStatus" AS ENUM
+    ('ACTIVE', 'DEACTIVATED', 'PENDING');
+
+ALTER TYPE public."UserStatus"
+    OWNER TO postgres;
+
+CREATE TYPE public."MfaType" AS ENUM
+    ('EMAIL', 'APP');
+
+ALTER TYPE public."MfaType"
+    OWNER TO postgres;
+
 BEGIN;
 
 CREATE TABLE IF NOT EXISTS public.product

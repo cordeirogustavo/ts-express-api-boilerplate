@@ -4,6 +4,8 @@ declare global {
       APP_NAME: string;
       APP_PORT: string;
       APP_SLUG: string;
+      APP_URL: string;
+      APP_SECRET: string;
       APP_ENV: "local" | "development" | "production" | "localstack";
       APP_LOG_LEVEL: string;
       AWS_S3_REGION: string;
@@ -36,9 +38,20 @@ declare global {
       CACHE_PROVIDER: "inactive" | "redis";
       MAX_BODY_SIZE: string;
       SERVER_TIMEOUT: number;
-      MZ_CORE_API_URL: string;
       TEMP_FOLDER: string | undefined;
       UPLOADS_FOLDER: string;
+      GOOGLE_CLIENT_ID: string;
+      GOOGLE_CLIENT_SECRET: string;
+      FACEBOOK_CLIENT_ID: string;
+      FACEBOOK_CLIENT_SECRET: string;
+      EMAIL_PROVIDER: string;
+      EMAIL_HOST: string;
+      EMAIL_PORT: string;
+      EMAIL_SECURE: boolean;
+      EMAIL_AUTH_USER: string;
+      EMAIL_AUTH_PASS: string;
+      EMAIL_SENDER_NAME: string;
+      EMAIL_SENDER_EMAIL: string;
     }
     interface Process {
       settings: {
@@ -46,15 +59,14 @@ declare global {
           port: number;
           name: string;
           slug: string;
+          url: string;
+          secret: string;
           env: "local" | "development" | "production" | "localstack";
           logLevel: string;
           maxBodySize: string;
           serverTimeout: number;
         };
         api: {};
-        mziq: {
-          url: string;
-        };
         aws: {
           keyId: string | undefined;
           secretKey: string | undefined;
@@ -71,6 +83,7 @@ declare global {
           queue: "inactive" | "rabbitmq";
           cache: "inactive" | "redis";
           database: "pgPromise" | "pg";
+          email: string;
         };
         database: {
           host: string;
@@ -106,6 +119,31 @@ declare global {
         storage: {
           tmpFolder?: string;
           uploadsFolder: string;
+        };
+        email: {
+          host: string;
+          port: number;
+          secure: boolean;
+          auth: {
+            user: string;
+            pass: string;
+          };
+          sender: {
+            name: string;
+            email: string;
+          };
+        };
+        google: {
+          oauth: {
+            clientId: string;
+            clientSecret: string;
+          };
+        };
+        facebook: {
+          oauth: {
+            clientId: string;
+            clientSecret: string;
+          };
         };
       };
     }
